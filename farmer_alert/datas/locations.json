@@ -1,0 +1,81 @@
+[
+  {
+    "name": "Golden Tarım Zirai İlaç & Tohumculuk & Gübre",
+    "lat": 38.61758664478908,
+    "long": 27.420738162062857,
+    "city": "Manisa",
+    "district": "Merkez"
+  },
+  {
+    "name": "EFOR ZİRAİ TARIM ÜRÜNLERİ SAN. VE TİC. LTD. ŞTİ.",
+    "lat": 38.61290428294542,
+    "long": 27.436574218558242,
+    "city": "Manisa",
+    "district": "Şehzadeler"
+  },
+  {
+    "name": "Erdal Mns Tarım",
+    "lat": 38.66029975533057,
+    "long": 27.33778822830762,
+    "city": "Manisa",
+    "district": "Yunusemre"
+  },
+  {
+    "name": "Güven Tarim",
+    "lat": 38.613685073370895,
+    "long": 27.43588169576671,
+    "city": "Manisa",
+    "district": "Merkez"
+  },
+  {
+    "name": "EGE TARIM",
+    "lat": 38.619095547419974, 
+    "long": 27.441346628310068,
+    "city": "Manisa",
+    "district": "Şehzadeler"
+  },
+  {
+    "name": "Mesir Tarım",
+    "lat": 38.623852824530104,
+    "long": 27.438531613492426,
+    "city": "Manisa",
+    "district": "Şehzadeler"
+  },
+  {"name":"Akbıyıkoğlu Tarım",
+  "lat":38.51590710232895,
+  "long": 28.34812789126253,
+  "city":"Manisa",
+  "district":"Salihli"
+  },
+  {"name":"Toros Tarım Kangal",
+  "lat":39.23319730326848,
+  "long":37.39142904428788,
+  "city":"Sivas",
+  "district":"Kangal"
+  },
+  {"name":"ASER TARIM VE HAYVANCILIK A.Ş.",
+  "lat":39.73178621351248,
+  "long": 37.006813782916716,
+  "city":"Sivas",
+  "district":"Merkez"
+  },
+  {"name":"Gerçek Ziraat Tarım Ticaret",
+  "lat":39.730721217498136,
+  "long":37.00566591784578,
+  "city":"Sivas",
+  "district":"Merkez"
+  },
+  {"name":"A.R.S TARİM-PROYEM",
+  "lat":39.73019086734923,
+  "long":37.00960395963067,
+  "city":"Sivas",
+  "district":"Merkez"
+  },
+  {"name":"Sortaş",
+  "lat":39.709091912599476,
+  "long":37.02832540435286,
+  "city":"Sivas",
+  "district":"Merkez"
+  }
+
+]
