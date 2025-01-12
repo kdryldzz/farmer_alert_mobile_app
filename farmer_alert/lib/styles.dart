@@ -14,7 +14,7 @@ extension TextStyles on BuildContext {
   TextStyle get buttonTextStyle =>
       TextStyle(fontSize: 20, color: colorBlack, fontWeight: FontWeight.w800);
 
-  Color get Color1 => Color(0xFF6A9AB0);
-  Color get Color2 => Color(0xFF3A6D8C);
-  Color get Color3 => Color(0xFFEAD8B1);
+  Color get Color1 => const Color(0xFF6A9AB0);
+  Color get Color2 => const Color(0xFF3A6D8C);
+  Color get Color3 => const Color(0xFFEAD8B1);
 }

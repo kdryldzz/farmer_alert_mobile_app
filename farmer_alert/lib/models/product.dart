@@ -16,6 +16,6 @@ class Product {
         name: json['Product Name'],
         price: json['Product Price'],
         imageUrl: json['Image Url'],
-        url: json['Image Url']);
+        url: json['Product Url']);
   }
 }

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart'; // JSON dosyasını yüklemek için
 
 class PlantsPage extends StatefulWidget {
+  const PlantsPage({super.key});
+
   @override
   _PlantsPageState createState() => _PlantsPageState();
 }
@@ -44,7 +46,7 @@ class _PlantsPageState extends State<PlantsPage> {
           // Üstteki bitkiler listesi
           Scaffold(
             appBar: AppBar(
-              title: Text('Bitkiler'),
+              title: const Text('Bitkiler'),
               centerTitle: true,
               backgroundColor: Colors.green,
               elevation: 0, // AppBar'ın gölge efektini kaldırdım
@@ -52,7 +54,7 @@ class _PlantsPageState extends State<PlantsPage> {
             backgroundColor:
                 Colors.transparent, // Scaffold'un arka planını saydam yaptım
             body: plants.isEmpty
-                ? Center(
+                ? const Center(
                     child:
                         CircularProgressIndicator(), // Veriler yüklenene kadar yükleniyor spinnerı
                   )
@@ -61,8 +63,8 @@ class _PlantsPageState extends State<PlantsPage> {
                     itemBuilder: (context, index) {
                       final plant = plants[index];
                       return Card(
-                        margin:
-                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 16),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -71,7 +73,7 @@ class _PlantsPageState extends State<PlantsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             ClipRRect(
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topLeft: Radius.circular(12),
                                 topRight: Radius.circular(12),
                               ),
@@ -89,13 +91,13 @@ class _PlantsPageState extends State<PlantsPage> {
                                 children: [
                                   Text(
                                     plant.name,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 22,
                                       color: Colors.black,
                                     ),
                                   ),
-                                  SizedBox(height: 8),
+                                  const SizedBox(height: 8),
                                   Text(
                                     plant.description,
                                     style: TextStyle(
@@ -105,14 +107,14 @@ class _PlantsPageState extends State<PlantsPage> {
                                     maxLines: 4,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  SizedBox(height: 12),
+                                  const SizedBox(height: 12),
                                   ElevatedButton(
                                     onPressed: () {
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  PlantDetailPage()));
+                                                  const PlantDetailPage()));
                                     },
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.green,
@@ -120,7 +122,7 @@ class _PlantsPageState extends State<PlantsPage> {
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                     ),
-                                    child: Text('View Details'),
+                                    child: const Text('View Details'),
                                   ),
                                 ],
                               ),

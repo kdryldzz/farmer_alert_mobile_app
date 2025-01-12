@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:farmer_alert/models/record.dart';
 
 class RecordsPage extends StatefulWidget {
+  const RecordsPage({super.key});
+
   @override
   _RecordsPageState createState() => _RecordsPageState();
 }
@@ -52,7 +54,7 @@ class _RecordsPageState extends State<RecordsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'KAYITLAR',
           style: TextStyle(
             fontWeight: FontWeight.w800,
@@ -63,12 +65,12 @@ class _RecordsPageState extends State<RecordsPage> {
         centerTitle: true,
         backgroundColor: Colors.green,
         flexibleSpace: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
               colors: [
-                const Color.fromARGB(255, 143, 218, 143),
+                Color.fromARGB(255, 143, 218, 143),
                 Color.fromARGB(255, 6, 89, 32)
               ], // Yeşil tonları
             ),
@@ -78,7 +80,7 @@ class _RecordsPageState extends State<RecordsPage> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('images/login_page.jpg'), // Doğa arka planı
+            image: const AssetImage('images/login_page.jpg'), // Doğa arka planı
             fit: BoxFit.cover,
             colorFilter: ColorFilter.mode(
                 Colors.black.withOpacity(0.9), BlendMode.dstATop),
@@ -93,7 +95,7 @@ class _RecordsPageState extends State<RecordsPage> {
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.7), // Yumuşak opaklık
                 borderRadius: BorderRadius.circular(10),
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(
                     color: Colors.black12,
                     blurRadius: 6,
@@ -104,7 +106,7 @@ class _RecordsPageState extends State<RecordsPage> {
               child: ListTile(
                 title: Text(
                   records[index].crop,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
                     color: Colors.black87,
@@ -112,7 +114,7 @@ class _RecordsPageState extends State<RecordsPage> {
                 ),
                 subtitle: Text(
                   'Tarih: ${records[index].date} - Maliyet: ${records[index].cost}₺',
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black54,
                     fontSize: 14,
                   ),
@@ -121,7 +123,7 @@ class _RecordsPageState extends State<RecordsPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.edit, color: Colors.blue),
+                      icon: const Icon(Icons.edit, color: Colors.blue),
                       onPressed: () async {
                         Record? updatedRecord = await Navigator.push(
                           context,
@@ -136,7 +138,7 @@ class _RecordsPageState extends State<RecordsPage> {
                       },
                     ),
                     IconButton(
-                      icon: Icon(Icons.delete, color: Colors.red),
+                      icon: const Icon(Icons.delete, color: Colors.red),
                       onPressed: () {
                         deleteRecord(index);
                       },
@@ -160,8 +162,8 @@ class _RecordsPageState extends State<RecordsPage> {
             addRecord(newRecord);
           }
         },
-        child: Icon(Icons.add),
         backgroundColor: Colors.green,
+        child: Icon(Icons.add),
       ),
     );
   }

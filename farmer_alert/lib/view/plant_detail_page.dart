@@ -12,10 +12,10 @@ class _PlantDetailPageState extends State<PlantDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Plant name"),
+        title: const Text("Plant name"),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           children: [],
         ),

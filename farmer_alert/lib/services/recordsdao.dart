@@ -49,7 +49,7 @@ class RecordDAO {
       String action, String crop, double cost, String date) async {
     var db =
         await VeritabaniYardimcisi.veritabaniErisim(); // Veritabanı erişimi
-    var bilgiler = Map<String, dynamic>(); // Yeni kayıt verisi
+    var bilgiler = <String, dynamic>{}; // Yeni kayıt verisi
 
     // Kayıt bilgilerini ekle
     bilgiler["action"] = action;
@@ -66,7 +66,7 @@ class RecordDAO {
       int id, String action, String crop, double cost, String date) async {
     var db =
         await VeritabaniYardimcisi.veritabaniErisim(); // Veritabanı erişimi
-    var bilgiler = Map<String, dynamic>(); // Güncellenen kayıt verisi
+    var bilgiler = <String, dynamic>{}; // Güncellenen kayıt verisi
 
     // Kayıt bilgilerini güncelle
     bilgiler["action"] = action;

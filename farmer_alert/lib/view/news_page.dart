@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class NewsPage extends StatefulWidget {
+  const NewsPage({super.key});
+
   @override
   _NewsPageState createState() => _NewsPageState();
 }
@@ -35,23 +37,23 @@ class _NewsPageState extends State<NewsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "HABERLER",
           style: TextStyle(fontWeight: FontWeight.w800, fontSize: 24),
         ),
         backgroundColor:
-            Color.fromARGB(255, 54, 116, 215), // Uyarlanmış başlık rengi
+            const Color.fromARGB(255, 54, 116, 215), // Uyarlanmış başlık rengi
         centerTitle: true,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("images/login_page.jpg"), // Arka plan resmi
             fit: BoxFit.cover,
           ),
         ),
         child: _announcements.isEmpty
-            ? Center(
+            ? const Center(
                 child:
                     CircularProgressIndicator()) // Veriler yüklenirken gösterilecek animasyon
             : ListView.builder(
@@ -59,17 +61,18 @@ class _NewsPageState extends State<NewsPage> {
                 itemBuilder: (context, index) {
                   final announcement = _announcements[index];
                   return Card(
-                    margin: EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
                     elevation: 10,
                     color: Colors.white.withOpacity(0.8),
                     child: ListTile(
-                      contentPadding: EdgeInsets.all(15),
+                      contentPadding: const EdgeInsets.all(15),
                       title: Text(
                         announcement['title'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                           color:
@@ -78,9 +81,9 @@ class _NewsPageState extends State<NewsPage> {
                       ),
                       subtitle: Text(
                         announcement['date'],
-                        style: TextStyle(color: Colors.black87),
+                        style: const TextStyle(color: Colors.black87),
                       ),
-                      trailing: Icon(
+                      trailing: const Icon(
                         Icons.arrow_forward,
                         color: Color.fromARGB(255, 54, 116, 215),
                       ),

@@ -12,7 +12,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Yardım ve Destek',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
         ),
@@ -24,9 +24,9 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
           children: [
             // Bilgilendirici Kısım
             Container(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               color: Colors.green[50],
-              child: Text(
+              child: const Text(
                 'Herhangi bir sorun yaşıyorsanız veya yardıma ihtiyacınız varsa aşağıdaki seçeneklerden birini kullanarak bize ulaşabilirsiniz.',
                 style: TextStyle(
                   fontSize: 16,
@@ -39,7 +39,7 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
             // Yardım ve Destek Listesi
             ListView(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               children: [
                 _buildSettingTile(
                   icon: Icons.chat,
@@ -91,14 +91,14 @@ class _HelpSupportPageState extends State<HelpSupportPage> {
     required VoidCallback onTap,
   }) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
       leading: Icon(icon, color: Colors.green),
       title: Text(
         title,
-        style: TextStyle(fontSize: 18),
+        style: const TextStyle(fontSize: 18),
       ),
       onTap: onTap,
-      trailing: Icon(Icons.arrow_forward_ios, size: 16),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
     );
   }
 }

@@ -4,7 +4,7 @@ import 'package:farmer_alert/models/record.dart';
 class AddRecordScreen extends StatefulWidget {
   final Record? record;
 
-  AddRecordScreen({this.record});
+  const AddRecordScreen({super.key, this.record});
 
   @override
   _AddRecordScreenState createState() => _AddRecordScreenState();
@@ -42,7 +42,7 @@ class _AddRecordScreenState extends State<AddRecordScreen> {
             children: [
               DropdownButtonFormField<String>(
                 value: selectedAction,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Eylem',
                   border: OutlineInputBorder(),
                 ),
@@ -58,38 +58,38 @@ class _AddRecordScreenState extends State<AddRecordScreen> {
                   });
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: cropController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Ürün',
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) =>
                     value!.isEmpty ? 'Bu alan boş bırakılamaz' : null,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: costController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Maliyet (₺)',
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) =>
                     value!.isEmpty ? 'Bu alan boş bırakılamaz' : null,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: dateController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Tarih (GG-AA-YYYY)',
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) =>
                     value!.isEmpty ? 'Bu alan boş bırakılamaz' : null,
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -104,10 +104,10 @@ class _AddRecordScreenState extends State<AddRecordScreen> {
                     );
                   }
                 },
-                child: Text(widget.record == null ? 'Kaydet' : 'Güncelle'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                 ),
+                child: Text(widget.record == null ? 'Kaydet' : 'Güncelle'),
               ),
             ],
           ),

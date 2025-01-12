@@ -5,7 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ProductDetailPage extends StatelessWidget {
   final Product product;
 
-  ProductDetailPage({required this.product});
+  const ProductDetailPage({super.key, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class ProductDetailPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors
               .white, // Arka planı sade beyaz yaparak dikkat dağıtmayı engelliyoruz
         ),
@@ -39,20 +39,20 @@ class ProductDetailPage extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 product.name,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
                   color: Colors.black, // Siyah metin rengi
                 ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Text(
                 product.price,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color:
@@ -60,21 +60,21 @@ class ProductDetailPage extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              Spacer(),
+              const Spacer(),
               ElevatedButton(
                 onPressed: () async {
                   final Uri testUri = Uri.parse(product.url);
                   await launchUrl(testUri,
                       mode: LaunchMode.externalApplication);
                 },
-                child: Text('Siteye Git'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green, // Buton yeşil
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: EdgeInsets.symmetric(vertical: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
                 ),
+                child: Text('Siteye Git'),
               ),
             ],
           ),

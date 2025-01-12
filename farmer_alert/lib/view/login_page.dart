@@ -1,3 +1,4 @@
+import 'package:farmer_alert/services/auth_service.dart';
 import 'package:farmer_alert/view/home_page.dart';
 import 'package:farmer_alert/view/register_page.dart';
 import 'package:flutter/material.dart';
@@ -10,39 +11,72 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+   //get  auth
+  final authService = AuthService();
+
+  // text Controllers
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+//login button on pressed
+  void login() async {
+    //prepare data
+    final email = _emailController.text;
+    final password = _passwordController.text;
+
+    //attempt login....
+    try {
+      await authService.SignInWithEmailPassword(email, password);
+      await ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(
+          "You logged in",
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: Colors.green,
+      ));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => HomePage()));
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text("errror message $e")));
+        _emailController.clear();
+        _passwordController.clear();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("images/login_page.jpg"),
             fit: BoxFit.cover,
           ),
         ),
         child: SingleChildScrollView(
-          child: Container(
+          child: SizedBox(
             height: MediaQuery.of(context).size.height, // Tam ekran yüksekliği
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(children: [
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
-                Text(
+                const Text(
                   "WELCOME TO ",
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
                 ),
-                Text(
+                const Text(
                   "FARMER ALERT ",
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.w800),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
-                Center(
+                const Center(
                     child: (Text(
                   "LOGIN",
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w800),
@@ -51,10 +85,11 @@ class _LoginPageState extends State<LoginPage> {
                   controller: _emailController,
                   decoration: InputDecoration(
                     labelText: "Email",
-                    labelStyle: TextStyle(color: Colors.white, fontSize: 16),
+                    labelStyle:
+                        const TextStyle(color: Colors.white, fontSize: 16),
                     hintText: "Enter your email",
-                    hintStyle: TextStyle(color: Colors.grey),
-                    prefixIcon: Icon(Icons.email, color: Colors.white),
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    prefixIcon: const Icon(Icons.email, color: Colors.white),
                     filled: true,
                     fillColor: Colors.black.withOpacity(0.6),
                     border: OutlineInputBorder(
@@ -63,7 +98,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(color: Colors.green, width: 2),
+                      borderSide:
+                          const BorderSide(color: Colors.green, width: 2),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -71,19 +107,20 @@ class _LoginPageState extends State<LoginPage> {
                           BorderSide(color: Colors.white.withOpacity(0.7)),
                     ),
                   ),
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                   cursorColor: Colors.green,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: "Password",
-                    labelStyle: TextStyle(color: Colors.white, fontSize: 16),
+                    labelStyle:
+                        const TextStyle(color: Colors.white, fontSize: 16),
                     hintText: "Enter your password",
-                    hintStyle: TextStyle(color: Colors.grey),
-                    prefixIcon: Icon(Icons.lock, color: Colors.white),
+                    hintStyle: const TextStyle(color: Colors.grey),
+                    prefixIcon: const Icon(Icons.lock, color: Colors.white),
                     filled: true,
                     fillColor: Colors.black.withOpacity(0.6),
                     border: OutlineInputBorder(
@@ -92,7 +129,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
-                      borderSide: BorderSide(color: Colors.green, width: 2),
+                      borderSide:
+                          const BorderSide(color: Colors.green, width: 2),
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15),
@@ -100,41 +138,38 @@ class _LoginPageState extends State<LoginPage> {
                           BorderSide(color: Colors.white.withOpacity(0.7)),
                     ),
                   ),
-                  style: TextStyle(color: Colors.white),
+                  style: const TextStyle(color: Colors.white),
                   cursorColor: Colors.green,
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  },
+                  onPressed:login,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
-                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 50, vertical: 15),
                   ),
-                  child: Text(
+                  child: const Text(
                     "Login",
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 GestureDetector(
-                  child: Text(
+                  child: const Text(
                     "if you don't have an account yet click here",
                     style: TextStyle(color: Colors.white),
                   ),
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => RegisterPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const RegisterPage()),
                     );
                   },
                 )

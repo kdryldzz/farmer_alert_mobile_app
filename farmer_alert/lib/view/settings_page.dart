@@ -1,7 +1,8 @@
 import 'package:farmer_alert/models/bottom_navigation_layout.dart';
+import 'package:farmer_alert/services/auth_service.dart';
 import 'package:farmer_alert/view/Privacy_security_page.dart';
 import 'package:farmer_alert/view/help_support_page.dart';
-import 'package:farmer_alert/view/languages_page.dart';
+import 'package:farmer_alert/view/home_page.dart';
 import 'package:farmer_alert/view/login_page.dart';
 import 'package:farmer_alert/view/notifications_page.dart';
 import 'package:flutter/material.dart';
@@ -15,116 +16,182 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   final int _currentIndex = 2;
+  String profileImage ="";
+  final AuthService _authService = AuthService();
+
+  Future<Map<String, dynamic>?> fetchUserProfile() async {
+    final id = _authService.getCurrentUserId(); // Aktif kullanıcı ID'sini alın
+    if (id == null) return null;
+
+    final response = await _authService.supabase
+        .from('users')
+        .select()
+        .eq('userId', id) // 'id' sütununu kontrol edin
+        .single();
+
+    return response as Map<String, dynamic>?;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationLayout(
-      currentIndex: _currentIndex,
-      body: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'AYARLAR',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+    return WillPopScope(
+      onWillPop: () async {
+        // Geri tuşuna basıldığında HomePage'e yönlendir
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+        return false; // Varsayılan geri işlevi engelleniyor
+      },
+      child: BottomNavigationLayout(
+        currentIndex: _currentIndex,
+        body: Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'AYARLAR',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+            ),
+            centerTitle: true,
+            backgroundColor: Colors.green,
           ),
-          centerTitle: true,
-          backgroundColor: Colors.green,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Profil kısmı
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                color: Colors.green[50],
-                child: Row(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Image.asset(
-                        'images/profile.jpg', // Profil fotoğrafı
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    SizedBox(width: 20),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Kadir Yıldız',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
+          body: SingleChildScrollView(
+            child: Column(
+              children: [
+                // Profil kısmı
+                FutureBuilder<Map<String, dynamic>?>( 
+                  future: fetchUserProfile(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    } else if (snapshot.hasError || !snapshot.hasData) {
+                      return Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 20),
+                        color: Colors.green[50],
+                        child: Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 40,
+                              backgroundImage:
+                                  AssetImage('images/profile.jpg'), // Profil fotoğrafı
+                            ),
+                            const SizedBox(width: 20),
+                            const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Bilinmeyen Kullanıcı',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 5),
+                                Text('E-posta bulunamadı'),
+                              ],
+                            ),
+                          ],
                         ),
-                        SizedBox(height: 5),
-                        Text('kadir_yildiz@example.com'),
-                      ],
+                      );
+                    }
+
+                    final user = snapshot.data!;
+
+                      if(user['gender']=='Female'){
+                profileImage = "images/profile.jpg"; // Profil fotoğrafı
+              }else{
+                profileImage = "images/women_profile.jpg"; // Profil fotoğrafı
+              }
+
+                    return Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 20),
+                      color: Colors.green[50],
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 40,
+                            backgroundImage:
+                                AssetImage(profileImage), // Profil fotoğrafı
+                          ),
+                          const SizedBox(width: 20),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '${user['name']} ${user['surname']}',
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Text(user['email']),
+                            ],
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+
+                // Ayarlar listesi
+                ListView(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: [
+                    _buildSettingTile(
+                      icon: Icons.notifications,
+                      title: 'Bildirimler',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const NotificationsPage()),
+                        );
+                      },
+                    ),
+                    _buildSettingTile(
+                      icon: Icons.lock,
+                      title: 'Gizlilik ve Güvenlik',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PrivacySecurityPage()),
+                        );
+                      },
+                    ),
+                    _buildSettingTile(
+                      icon: Icons.help,
+                      title: 'Yardım ve Destek',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HelpSupportPage()),
+                        );
+                      },
+                    ),
+                    _buildSettingTile(
+                      icon: Icons.exit_to_app,
+                      title: 'Çıkış Yap',
+                      onTap: () {
+                        _authService.signOut();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                        );
+                      },
                     ),
                   ],
                 ),
-              ),
-
-              // Ayarlar listesi
-              ListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: [
-                  _buildSettingTile(
-                    icon: Icons.notifications,
-                    title: 'Bildirimler',
-                    onTap: () {
-                      // Bildirimler ayarları
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => NotificationsPage()));
-                    },
-                  ),
-                  _buildSettingTile(
-                    icon: Icons.language,
-                    title: 'Dil',
-                    onTap: () {
-                      // Dil seçimi
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => LanguagesPage()));
-                    },
-                  ),
-                  _buildSettingTile(
-                    icon: Icons.lock,
-                    title: 'Gizlilik ve Güvenlik',
-                    onTap: () {
-                      // Gizlilik ve güvenlik ayarları
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => PrivacySecurityPage()));
-                    },
-                  ),
-                  _buildSettingTile(
-                    icon: Icons.help,
-                    title: 'Yardım ve Destek',
-                    onTap: () {
-                      // Yardım sayfası
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HelpSupportPage()));
-                    },
-                  ),
-                  _buildSettingTile(
-                    icon: Icons.exit_to_app,
-                    title: 'Çıkış Yap',
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => LoginPage()));
-                    },
-                  ),
-                ],
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -138,14 +205,14 @@ class _SettingsPageState extends State<SettingsPage> {
     required VoidCallback onTap,
   }) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
       leading: Icon(icon, color: Colors.green),
       title: Text(
         title,
-        style: TextStyle(fontSize: 18),
+        style: const TextStyle(fontSize: 18),
       ),
       onTap: onTap,
-      trailing: Icon(Icons.arrow_forward_ios, size: 16),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
     );
   }
 }

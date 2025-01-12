@@ -17,7 +17,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Bildirimler',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
         ),
@@ -29,9 +29,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
           children: [
             // Bilgilendirici Kısım
             Container(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               color: Colors.green[50],
-              child: Text(
+              child: const Text(
                 'Bildirim tercihlerinizi aşağıdaki seçeneklerden yönetebilirsiniz.',
                 style: TextStyle(
                   fontSize: 16,
@@ -43,8 +43,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
 
             // Bildirim Ayarları
             SwitchListTile(
-              title: Text('Genel Bildirimler'),
-              subtitle: Text('Uygulama ile ilgili önemli bildirimleri alın.'),
+              title: const Text('Tüm Bildirimlere İzin Ver'),
+              subtitle:
+                  const Text('Uygulama ile ilgili bildirimleri alın.'),
               value: _generalNotifications,
               onChanged: (value) {
                 setState(() {
@@ -54,9 +55,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
               activeColor: Colors.green,
             ),
             SwitchListTile(
-              title: Text('Tanıtım Bildirimleri'),
-              subtitle:
-                  Text('Promosyonlar ve kampanyalar hakkında bildirimler.'),
+              title: const Text('Tanıtım Bildirimleri'),
+              subtitle: const Text(
+                  'Promosyonlar ve kampanyalar hakkında bildirimler.'),
               value: _promotionalNotifications,
               onChanged: (value) {
                 setState(() {
@@ -66,8 +67,8 @@ class _NotificationsPageState extends State<NotificationsPage> {
               activeColor: Colors.green,
             ),
             SwitchListTile(
-              title: Text('Bildirim Sesi'),
-              subtitle: Text('Bildirimlerde ses çalsın.'),
+              title: const Text('Bildirim Sesi'),
+              subtitle: const Text('Bildirimlerde ses çalsın.'),
               value: _soundEnabled,
               onChanged: (value) {
                 setState(() {
@@ -77,8 +78,9 @@ class _NotificationsPageState extends State<NotificationsPage> {
               activeColor: Colors.green,
             ),
             SwitchListTile(
-              title: Text('Bildirim Titreşimi'),
-              subtitle: Text('Bildirimler sırasında titreşim kullanılsın.'),
+              title: const Text('Bildirim Titreşimi'),
+              subtitle:
+                  const Text('Bildirimler sırasında titreşim kullanılsın.'),
               value: _vibrationEnabled,
               onChanged: (value) {
                 setState(() {
@@ -95,7 +97,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 onPressed: () {
                   // Kullanıcının ayarları kaydedilebilir
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                       content: Text('Bildirim ayarları kaydedildi!'),
                       backgroundColor: Colors.green,
                     ),
@@ -103,12 +105,13 @@ class _NotificationsPageState extends State<NotificationsPage> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   'Kaydet',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),

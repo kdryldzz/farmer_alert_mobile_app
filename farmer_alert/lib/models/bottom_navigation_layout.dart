@@ -35,16 +35,16 @@ class _BottomNavigationLayoutState extends State<BottomNavigationLayout> {
 
       switch (index) {
         case 0:
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => ProfilePage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const ProfilePage()));
           break;
         case 1:
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => HomePage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => HomePage()));
           break;
         case 2:
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => SettingsPage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const SettingsPage()));
           break;
       }
     }

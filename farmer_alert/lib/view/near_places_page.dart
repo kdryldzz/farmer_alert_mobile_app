@@ -1,6 +1,8 @@
 import 'dart:convert'; // JSON decode işlemi için
+import 'package:farmer_alert/services/auth_service.dart';
 import 'package:flutter/services.dart'; // Asset dosyasını yüklemek için
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NearPlacesPage extends StatefulWidget {
   const NearPlacesPage({super.key});
@@ -14,6 +16,28 @@ class _NearPlacesPageState extends State<NearPlacesPage> {
   List<dynamic> filteredLocations = []; // Filtrelenmiş konumlar
   String searchQuery = ""; // Arama çubuğundaki metin
   bool isSearching = false; // Arama çubuğu açık mı kontrolü
+  String currentUserCity = ""; // Aktif kullanıcının şehir bilgisi (örnek)
+// Kullanıcının şehir bilgisini çekme
+  Future<void> _getUserCity() async {
+    final currentUserId = AuthService().getCurrentUserId();
+    if (currentUserId != null) {
+      try {
+        final response = await AuthService().supabase
+            .from('users')
+            .select('city') // 'city' kolonunu seçiyoruz
+            .eq('userId', currentUserId)
+            .single();
+
+        setState(() {
+          currentUserCity = response['city'];  // City bilgisini alıyoruz
+        });
+      } catch (e) {
+        print("City fetch error: $e");
+        
+      }
+    }
+  }
+
 
   // JSON verilerini yüklemek için
   Future<void> loadLocations() async {
@@ -23,7 +47,11 @@ class _NearPlacesPageState extends State<NearPlacesPage> {
       final data = json.decode(response); // JSON'u çözümle
       setState(() {
         locations = data; // Tüm konumları atayın
-        filteredLocations = data; // Başlangıçta tüm konumlar görünsün
+        filteredLocations = locations
+            .where((location) =>
+                location['city'].toString().toLowerCase() ==
+                currentUserCity.toLowerCase()) // Kullanıcı şehir filtreleme
+            .toList();
       });
     } catch (e) {
       print("Hata: $e");
@@ -35,13 +63,20 @@ class _NearPlacesPageState extends State<NearPlacesPage> {
     setState(() {
       searchQuery = query;
       if (query.isEmpty) {
-        filteredLocations = locations; // Tüm listeyi göster
+        filteredLocations = locations
+            .where((location) =>
+                location['city'].toString().toLowerCase() ==
+                currentUserCity.toLowerCase()) // Kullanıcı şehir filtreleme
+            .toList();
       } else {
         filteredLocations = locations
-            .where((location) => location['name']
-                .toString()
-                .toLowerCase()
-                .contains(query.toLowerCase()))
+            .where((location) =>
+                location['city'].toString().toLowerCase() ==
+                    currentUserCity.toLowerCase() &&
+                location['name']
+                    .toString()
+                    .toLowerCase()
+                    .contains(query.toLowerCase()))
             .toList();
       }
     });
@@ -50,9 +85,14 @@ class _NearPlacesPageState extends State<NearPlacesPage> {
   @override
   void initState() {
     super.initState();
-    loadLocations(); // Sayfa yüklendiğinde verileri al
+    _initializePage();
+    // Sayfa yüklendiğinde verileri al
+   
   }
-
+Future<void> _initializePage() async {
+  await _getUserCity(); // Önce şehir bilgisi alınır
+  await loadLocations(); // Ardından konumlar yüklenir
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,10 +100,10 @@ class _NearPlacesPageState extends State<NearPlacesPage> {
         title: isSearching
             ? TextField(
                 onChanged: filterLocations,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Yer ara...",
                   border: InputBorder.none,
-                  hintStyle: const TextStyle(color: Colors.white70),
+                  hintStyle: TextStyle(color: Colors.white70),
                 ),
                 style: const TextStyle(color: Colors.white, fontSize: 18),
               )
@@ -81,7 +121,11 @@ class _NearPlacesPageState extends State<NearPlacesPage> {
                     setState(() {
                       isSearching = false;
                       searchQuery = "";
-                      filteredLocations = locations;
+                      filteredLocations = locations
+                          .where((location) =>
+                              location['city'].toString().toLowerCase() ==
+                              currentUserCity.toLowerCase()) // Şehir filtresi
+                          .toList();
                     });
                   },
                 )
@@ -136,8 +180,10 @@ class _NearPlacesPageState extends State<NearPlacesPage> {
                         style: const TextStyle(color: Colors.black87),
                       ),
                       trailing: ElevatedButton(
-                        onPressed: () {
-                          // Burada "Konuma git" butonu için işlem yapılabilir
+                        onPressed: () async {
+                          final Uri testUri = Uri.parse(location['url']);
+                          await launchUrl(testUri,
+                              mode: LaunchMode.externalApplication);
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor:

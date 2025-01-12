@@ -12,7 +12,7 @@ class _PrivacySecurityPageState extends State<PrivacySecurityPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Gizlilik ve Güvenlik',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
         ),
@@ -24,9 +24,9 @@ class _PrivacySecurityPageState extends State<PrivacySecurityPage> {
           children: [
             // Bilgilendirici kısım
             Container(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               color: Colors.green[50],
-              child: Text(
+              child: const Text(
                 'Gizlilik ve güvenlik ayarlarınızı burada yönetebilirsiniz.',
                 style: TextStyle(
                   fontSize: 16,
@@ -39,34 +39,13 @@ class _PrivacySecurityPageState extends State<PrivacySecurityPage> {
             // Ayarlar listesi
             ListView(
               shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               children: [
                 _buildSettingTile(
-                  icon: Icons.security,
-                  title: 'Hesap Güvenliği',
-                  onTap: () {
-                    // Hesap güvenliği ayarları
-                  },
-                ),
-                _buildSettingTile(
-                  icon: Icons.privacy_tip,
-                  title: 'Veri Gizliliği',
-                  onTap: () {
-                    // Veri gizliliği ayarları
-                  },
-                ),
-                _buildSettingTile(
-                  icon: Icons.shield,
-                  title: 'İki Faktörlü Kimlik Doğrulama',
+                  icon: Icons.reset_tv,
+                  title: 'Şifre Yenile',
                   onTap: () {
                     // İki faktörlü kimlik doğrulama ayarları
-                  },
-                ),
-                _buildSettingTile(
-                  icon: Icons.block,
-                  title: 'Engellenen Kullanıcılar',
-                  onTap: () {
-                    // Engellenen kullanıcılar ayarları
                   },
                 ),
                 _buildSettingTile(
@@ -75,7 +54,7 @@ class _PrivacySecurityPageState extends State<PrivacySecurityPage> {
                   onTap: () {
                     // Hesap silme işlemi
                   },
-                ),
+                )
               ],
             ),
           ],
@@ -91,14 +70,14 @@ class _PrivacySecurityPageState extends State<PrivacySecurityPage> {
     required VoidCallback onTap,
   }) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
       leading: Icon(icon, color: Colors.green),
       title: Text(
         title,
-        style: TextStyle(fontSize: 18),
+        style: const TextStyle(fontSize: 18),
       ),
       onTap: onTap,
-      trailing: Icon(Icons.arrow_forward_ios, size: 16),
+      trailing: const Icon(Icons.arrow_forward_ios, size: 16),
     );
   }
 }
