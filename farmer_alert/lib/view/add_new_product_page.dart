@@ -18,7 +18,7 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
 
   // Sulama aralığı seçenekleri
   final List<String> irrigationOptions = [
-    "Sulama planı yapma",
+    "Plan yok",
     "Günde bir",
     "İki günde bir",
     "Üç günde bir",
@@ -27,7 +27,7 @@ class _AddNewProductPageState extends State<AddNewProductPage> {
     "İki ayda bir",
   ];
 
-  String selectedIrrigationPlan = "Sulama planı yapma"; // Varsayılan değer
+  String selectedIrrigationPlan = "Plan yok"; // Varsayılan değer
 
   // Supabase instance
   final supabase = Supabase.instance.client;
@@ -148,7 +148,7 @@ final irrigationDateList = irrigationDates.map((date) {
 }).toList();
 
 // İrrigasyon tarihlerini ekledikten sonra, Supabase yanıtını kontrol et
-final irrigationResponse = await supabase.from('irrigation_dates').insert(irrigationDateList);
+await supabase.from('irrigation_dates').insert(irrigationDateList);
 
 // Yanıt kontrolü // Burada hata kontrolü yapmadan devam edebilirsiniz// burada hata var ama yinede ekliyor database'e
 
@@ -158,7 +158,7 @@ final irrigationResponse = await supabase.from('irrigation_dates').insert(irriga
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Sulama Planı Oluşturuldu"),
+          title: const Text("İlaçlama Planı Oluşturuldu"),
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: irrigationDates
@@ -243,7 +243,7 @@ final irrigationResponse = await supabase.from('irrigation_dates').insert(irriga
               ),
               const SizedBox(height: 15),
               const Text(
-                "Sulama Planı",
+                "İlaçlama Planı",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -277,7 +277,7 @@ final irrigationResponse = await supabase.from('irrigation_dates').insert(irriga
               ),
               const SizedBox(height: 10),
               ListTile(
-                title: const Text("İlk Sulama Tarihi"),
+                title: const Text("İlk ilaçlama Tarihi"),
                 subtitle: Text(_irrigationDate == null
                     ? "Henüz seçilmedi"
                     : DateFormat.yMMMMd().format(_irrigationDate!)),

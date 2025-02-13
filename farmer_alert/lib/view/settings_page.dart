@@ -1,7 +1,6 @@
 import 'package:farmer_alert/models/bottom_navigation_layout.dart';
 import 'package:farmer_alert/services/auth_service.dart';
 import 'package:farmer_alert/view/Privacy_security_page.dart';
-import 'package:farmer_alert/view/help_support_page.dart';
 import 'package:farmer_alert/view/home_page.dart';
 import 'package:farmer_alert/view/login_page.dart';
 import 'package:farmer_alert/view/notifications_page.dart';
@@ -166,19 +165,8 @@ class _SettingsPageState extends State<SettingsPage> {
                       },
                     ),
                     _buildSettingTile(
-                      icon: Icons.help,
-                      title: 'Yardım ve Destek',
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const HelpSupportPage()),
-                        );
-                      },
-                    ),
-                    _buildSettingTile(
                       icon: Icons.exit_to_app,
-                      title: 'Çıkış Yap',
+                      title: 'Oturumu Kapat',
                       onTap: () {
                         _authService.signOut();
                         Navigator.pushReplacement(

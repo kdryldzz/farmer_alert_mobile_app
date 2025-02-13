@@ -1,22 +1,66 @@
 [
   {
-    "name": "Ispanak",
-    "description": "Ispanak, demir ve folat açısından zengindir ve kemik sağlığını destekler. Ayrıca, antioksidan özelliklere sahip olan vitaminler içerir.",
-    "imageUrl": "https://static.ticimax.cloud/30547/uploads/urunresimleri/buyuk/ispanak-kg-e88-b1.jpg"
+    "name": "Buğday",
+    "description": "Buğday, tahıl türlerinden biridir.",
+    "imageUrl": "https://goodineverygrain.ca/wp-content/uploads/2021/06/wheat-berries-bowl.png",
+    "wateringInterval": "Yağmur suyuyla yeterli",
+    "plantingSeason": "Mart-Mayıs",
+    "harvestTime": "100 gün"
+  },
+  {
+    "name": "Mısır",
+    "description": "Mısır, yüksek besin değerine sahip bir bitkidir.",
+    "imageUrl": "https://hips.hearstapps.com/hmg-prod/images/how-to-grow-corn-1528315419.jpg?crop=0.675xw:1.00xh;0.163xw,0&resize=1200:*",
+    "wateringInterval": "Her 5-7 günde bir",
+    "plantingSeason": "Nisan-Haziran",
+    "harvestTime": "90 gün"
+  },
+  {
+    "name": "Domates",
+    "description": "Domates, çok yaygın olarak yetiştirilen ve tüketilen bir sebzedir.",
+    "imageUrl": "https://media.istockphoto.com/id/171589415/tr/foto%C4%9Fraf/tomatoes.jpg?s=612x612&w=0&k=20&c=5bvUgx7XSvmL2l3QFUzb8SF9Xxw6S0SeSIGmsLt-M-Y=",
+    "wateringInterval": "Her 3-5 günde bir",
+    "plantingSeason": "Nisan-Haziran",
+    "harvestTime": "60-85 gün"
+  },
+  {
+    "name": "Salatalık",
+    "description": "Salatalık, taze tüketilen ve çok su isteyen bir sebzedir.",
+    "imageUrl": "https://panayirgourmet.com/cdn/shop/files/cengelkoy-salatalik-618027.jpg?v=1718700787",
+    "wateringInterval": "Her 3-5 günde bir",
+    "plantingSeason": "Mayıs-Haziran",
+    "harvestTime": "50-70 gün"
   },
   {
     "name": "Fasulye",
-    "description": "Fasulye, protein ve lif açısından zengindir. Ayrıca, B vitaminleri, demir ve magnezyum içerir, bu da kemik sağlığını ve sindirimi destekler.",
-    "imageUrl": "https://static.ticimax.cloud/cdn-cgi/image/width=-,quality=85/3140/uploads/urunresimleri/buyuk/1c154b6d-cfbc-4ff7-8a1c-89d160528525.jpg"
+    "description": "Fasulye, yüksek protein içeriğiyle tanınan bir baklagildir.",
+    "imageUrl": "https://iasbh.tmgrup.com.tr/958abe/650/344/0/57/1200/687?u=https://isbh.tmgrup.com.tr/sbh/2018/05/01/taze-fasulye-nasil-yapilir-evde-taze-fasulye-yapilisi-ve-tarifi-1525162941485.jpg",
+    "wateringInterval": "Her 5-7 günde bir",
+    "plantingSeason": "Nisan-Mayıs",
+    "harvestTime": "70-90 gün"
   },
   {
-    "name": "Çilek",
-    "description": "Çilek, vitamin C açısından zengin bir meyvedir ve antioksidan özellikleri ile bilinir. Ayrıca, kalp sağlığı ve cilt için faydalıdır.",
-    "imageUrl": "https://apelasyon.com/images/images/Garden_strawberry_(Fragaria_%C3%97_ananassa)_single2.jpg"
+    "name": "Patates",
+    "description": "Patates, toprak altı yumrularıyla yetişen, en yaygın sebzelerden biridir.",
+    "imageUrl": "https://tasam.org/Files/Images/Manset/patates_2014_20_1_1a090f59-3695-4bcf-a4fc-6722d0d1edbb.png",
+    "wateringInterval": "Her 5-7 günde bir",
+    "plantingSeason": "Mart-Mayıs",
+    "harvestTime": "80-120 gün"
   },
   {
-    "name": "Elma",
-    "description": "Elma, yüksek miktarda lif, vitamin C ve çeşitli mineraller içerir. Ayrıca, bağışıklık sistemini destekleyen flavonoidler ve antioksidanlar içerir.",
-    "imageUrl": "https://recipesblob.droetker.com.tr/assets/35ac3af626d441b6bba99d940c492ae7/1272x764/elma-shutterstock_118136575jpg.webp"
+    "name": "Arpa",
+    "description": "Arpa, tahıl türlerinden biri olup genellikle hayvan yemi olarak kullanılır.",
+    "imageUrl": "https://arastirma.tarimorman.gov.tr/gktaem/FotografGalerisi/arpa_sabribey/sabribey%20foto1.jpg?RenditionId=3",
+    "wateringInterval": "Yağmur suyuyla yeterli",
+    "plantingSeason": "Mart-Mayıs",
+    "harvestTime": "90-100 gün"
+  },
+  {
+    "name": "Üzüm",
+    "description": "Üzüm, meyvesi şarap üretimi ve taze tüketim için yetiştirilen bir bitkidir.",
+    "imageUrl": "https://t3.ftcdn.net/jpg/02/85/04/54/360_F_285045466_SACloqTlL3Gk6FK6ffFYn2QLocbszUqH.jpg",
+    "wateringInterval": "Yağmur suyuyla yeterli",
+    "plantingSeason": "Mart-Mayıs",
+    "harvestTime": "3 yıl"
   }
 ]

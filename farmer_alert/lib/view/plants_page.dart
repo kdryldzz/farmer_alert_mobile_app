@@ -34,106 +34,75 @@ class _PlantsPageState extends State<PlantsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Arka plan resmi
-          Positioned.fill(
-            child: Image.asset(
-              'images/login_page.jpg', // Görsel dosyasının yolu
-              fit: BoxFit.cover, // Görseli ekranı dolduracak şekilde yerleştir
-            ),
+      appBar: AppBar(
+        title: const Text('Bitkiler',style: TextStyle(fontSize: 32,fontWeight: FontWeight.w700),),
+        centerTitle: true,
+        backgroundColor: Colors.green,
+        elevation: 0, // AppBar'ın gölge efektini kaldırdım
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/login_page.jpg"), // Arka plan resmi
+            fit: BoxFit.cover,
           ),
-          // Üstteki bitkiler listesi
-          Scaffold(
-            appBar: AppBar(
-              title: const Text('Bitkiler'),
-              centerTitle: true,
-              backgroundColor: Colors.green,
-              elevation: 0, // AppBar'ın gölge efektini kaldırdım
-            ),
-            backgroundColor:
-                Colors.transparent, // Scaffold'un arka planını saydam yaptım
-            body: plants.isEmpty
-                ? const Center(
-                    child:
-                        CircularProgressIndicator(), // Veriler yüklenene kadar yükleniyor spinnerı
-                  )
-                : ListView.builder(
-                    itemCount: plants.length,
-                    itemBuilder: (context, index) {
-                      final plant = plants[index];
-                      return Card(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 8, horizontal: 16),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        elevation: 4,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                topRight: Radius.circular(12),
-                              ),
-                              child: Image.network(
-                                plant.imageUrl,
-                                width: double.infinity,
-                                height: 200,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(16),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    plant.name,
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 22,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    plant.description,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.grey[600],
-                                    ),
-                                    maxLines: 4,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  const SizedBox(height: 12),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const PlantDetailPage()));
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                    ),
-                                    child: const Text('View Details'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+        ),
+        child: plants.isEmpty
+            ? const Center(
+                child: CircularProgressIndicator(), // Veriler yüklenene kadar yükleniyor spinnerı
+              )
+            : ListView.builder(
+                itemCount: plants.length,
+                itemBuilder: (context, index) {
+                  final plant = plants[index];
+                  return GestureDetector(
+                    onTap: () {
+                      // Bitkilerin detaylarına gitmek için
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PlantDetailPage(plant: plant),
                         ),
                       );
                     },
-                  ),
-          ),
-        ],
+                    child: Card(
+                      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 4,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(12),
+                              topRight: Radius.circular(12),
+                            ),
+                            child: Image.network(
+                              plant.imageUrl,
+                              width: double.infinity,
+                              height: 200,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Text(
+                              plant.name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 22,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
       ),
     );
   }

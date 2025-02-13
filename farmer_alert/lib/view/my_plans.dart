@@ -46,7 +46,7 @@ class _MyPlansPageState extends State<MyPlansPage> {
             .eq('product_id', productId);
 
         if (irrigationResponse.isEmpty) {
-          throw Exception('Sulama verileri alınamadı');
+          throw Exception('plan verileri alınamadı');
         }
 
         irrigationDates[productId] = (irrigationResponse as List)
@@ -122,13 +122,13 @@ class _MyPlansPageState extends State<MyPlansPage> {
                           children: [
                             const SizedBox(height: 10),
                             Text(
-                              'Sulama Planı: ${product['irrigation_plan']}',
+                              'İlaçlama Planı: ${product['irrigation_plan']}',
                               style: const TextStyle(color: Colors.white, fontSize: 16),
                             ),
                             const SizedBox(height: 15),
                             if (irrigationList.isNotEmpty)
                               const Text(
-                                'Sulama Tarihleri:',
+                                'İlaçlama Tarihleri:',
                                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
                               ),
                             const SizedBox(height: 5),

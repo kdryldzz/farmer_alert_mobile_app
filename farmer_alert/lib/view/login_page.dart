@@ -13,6 +13,68 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
    //get  auth
   final authService = AuthService();
+  void _resetPassword(String email) async {
+  try {
+    await authService.resetPassword(email);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Password reset email sent to $email"),
+        backgroundColor: Colors.green,
+      ),
+    );
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Error: $e"),
+        backgroundColor: Colors.red,
+      ),
+    );
+  }
+}
+void _showPasswordResetDialog() {
+  final TextEditingController emailController = TextEditingController();
+
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text("Password Reset"),
+        content: TextField(
+          controller: emailController,
+          decoration: const InputDecoration(
+            labelText: "Enter your email",
+            hintText: "example@example.com",
+          ),
+        ),
+        actions: [
+          TextButton(
+            child: const Text("Cancel"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: const Text("Reset"),
+            onPressed: () {
+              final email = emailController.text.trim();
+              if (email.isNotEmpty) {
+                _resetPassword(email);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Please enter a valid email"),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+              }
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
   // text Controllers
   final _emailController = TextEditingController();
@@ -163,7 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                 GestureDetector(
                   child: const Text(
                     "if you don't have an account yet click here",
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.blue,fontWeight: FontWeight.w900),
                   ),
                   onTap: () {
                     Navigator.push(
@@ -172,7 +234,17 @@ class _LoginPageState extends State<LoginPage> {
                           builder: (context) => const RegisterPage()),
                     );
                   },
-                )
+                ),
+                SizedBox(height: 20,),
+                GestureDetector(
+  child: const Text(
+    "Forgot your password?",
+    style: TextStyle(color: Colors.red, fontWeight: FontWeight.w800),
+  ),
+  onTap: () {
+    _showPasswordResetDialog();
+  },
+),
               ]),
             ),
           ),

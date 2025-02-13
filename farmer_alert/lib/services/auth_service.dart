@@ -68,4 +68,39 @@ class AuthService {
       print('Hata: $e');
     }
   }
+  // Password Reset
+Future<void> resetPassword(String email) async {
+  try {
+    await _supabase.auth.resetPasswordForEmail(email);
+    print("Password reset email sent to $email");
+  } catch (e) {
+    print("Error resetting password: $e");
+    throw Exception("Password reset failed");
+  }
+}
+Future<void> requestAccountDeletion() async {
+  try {
+    final userId = getCurrentUserId();
+    final email = getCurrentUserEmail();
+
+    if (userId == null || email == null) {
+      throw Exception("Kullanıcı bilgilerine erişilemedi.");
+    }
+
+    final response = await _supabase.from('delete_requests').insert({
+      'user_id': userId,
+      'email': email,
+    });
+
+    if (response.error != null) {
+      throw Exception('Hesap silme isteği kaydedilemedi: ${response.error!.message}');
+    }
+
+    print('Hesap silme isteği başarıyla kaydedildi.');
+  } catch (e) {
+    print('Hata: $e');
+    rethrow;
+  }
+}
+
 }

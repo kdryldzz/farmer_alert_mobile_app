@@ -1,17 +1,39 @@
+import 'package:farmer_alert/services/notification_service.dart';
 import 'package:flutter/material.dart';
-
 class NotificationsPage extends StatefulWidget {
+  
   const NotificationsPage({super.key});
-
   @override
   State<NotificationsPage> createState() => _NotificationsPageState();
 }
 
 class _NotificationsPageState extends State<NotificationsPage> {
   bool _generalNotifications = true; // Genel bildirimler
-  bool _promotionalNotifications = false; // Tanıtım bildirimleri
-  bool _soundEnabled = true; // Ses açık mı?
-  bool _vibrationEnabled = true; // Titreşim açık mı?
+  final NotificationServiceToSave _notificationService = NotificationServiceToSave();
+
+  Future<void> _savePreferences() async {
+    try {
+      final userId = "currentUserId"; // AuthService ile aktif kullanıcı ID'sini alın
+      await _notificationService.updateNotificationPreferences(
+        userId: userId,
+        generalNotifications: _generalNotifications,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Bildirim ayarları kaydedildi!'),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Hata: $e'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +66,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
             // Bildirim Ayarları
             SwitchListTile(
               title: const Text('Tüm Bildirimlere İzin Ver'),
-              subtitle:
-                  const Text('Uygulama ile ilgili bildirimleri alın.'),
+              subtitle: const Text('Uygulama ile ilgili bildirimleri alın.'),
               value: _generalNotifications,
               onChanged: (value) {
                 setState(() {
@@ -54,59 +75,14 @@ class _NotificationsPageState extends State<NotificationsPage> {
               },
               activeColor: Colors.green,
             ),
-            SwitchListTile(
-              title: const Text('Tanıtım Bildirimleri'),
-              subtitle: const Text(
-                  'Promosyonlar ve kampanyalar hakkında bildirimler.'),
-              value: _promotionalNotifications,
-              onChanged: (value) {
-                setState(() {
-                  _promotionalNotifications = value;
-                });
-              },
-              activeColor: Colors.green,
-            ),
-            SwitchListTile(
-              title: const Text('Bildirim Sesi'),
-              subtitle: const Text('Bildirimlerde ses çalsın.'),
-              value: _soundEnabled,
-              onChanged: (value) {
-                setState(() {
-                  _soundEnabled = value;
-                });
-              },
-              activeColor: Colors.green,
-            ),
-            SwitchListTile(
-              title: const Text('Bildirim Titreşimi'),
-              subtitle:
-                  const Text('Bildirimler sırasında titreşim kullanılsın.'),
-              value: _vibrationEnabled,
-              onChanged: (value) {
-                setState(() {
-                  _vibrationEnabled = value;
-                });
-              },
-              activeColor: Colors.green,
-            ),
-
             // Kaydet Butonu
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               child: ElevatedButton(
-                onPressed: () {
-                  // Kullanıcının ayarları kaydedilebilir
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Bildirim ayarları kaydedildi!'),
-                      backgroundColor: Colors.green,
-                    ),
-                  );
-                },
+                onPressed: _savePreferences, // Ayarları kaydetme
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),

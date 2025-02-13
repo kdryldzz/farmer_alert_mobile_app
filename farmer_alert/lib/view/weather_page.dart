@@ -62,7 +62,6 @@ class _WeatherPageState extends State<WeatherPage> {
       }
     }
   }
-
   @override
   void initState() {
     _getWeatherData();

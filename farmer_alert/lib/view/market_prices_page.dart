@@ -13,12 +13,27 @@ class MarketPrices extends StatefulWidget {
 
 class _MarketPricesState extends State<MarketPrices> {
   List<Product> products = [];
+  List<Product> filteredProducts = [];
+  final TextEditingController _searchController = TextEditingController();
 
   Future<void> loadProducts() async {
     final jsonString = await rootBundle.loadString('datas/tohumlist.json');
     final jsonData = json.decode(jsonString) as List;
     setState(() {
       products = jsonData.map((data) => Product.fromJson(data)).toList();
+      filteredProducts = products;
+    });
+  }
+
+  void _filterProducts(String query) {
+    setState(() {
+      if (query.isEmpty) {
+        filteredProducts = products;
+      } else {
+        filteredProducts = products
+            .where((product) => product.name.toLowerCase().contains(query.toLowerCase()))
+            .toList();
+      }
     });
   }
 
@@ -26,6 +41,15 @@ class _MarketPricesState extends State<MarketPrices> {
   void initState() {
     super.initState();
     loadProducts();
+    _searchController.addListener(() {
+      _filterProducts(_searchController.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,28 +60,48 @@ class _MarketPricesState extends State<MarketPrices> {
           "ÜRÜN LİSTESİ",
           style: TextStyle(fontWeight: FontWeight.w800, fontSize: 24),
         ),
-        backgroundColor:
-            const Color.fromARGB(255, 54, 116, 215), // Uyarlanmış başlık rengi
+        backgroundColor: const Color.fromARGB(255, 54, 116, 215),
         centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(50.0),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Gübre ismine göre ara...',
+                prefixIcon: const Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+              ),
+            ),
+          ),
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("images/login_page.jpg"), // Arka plan resmi
+            image: AssetImage("images/login_page.jpg"),
             fit: BoxFit.cover,
           ),
         ),
-        child: products.isEmpty
+        child: filteredProducts.isEmpty
             ? const Center(
-                child:
-                    CircularProgressIndicator()) // Veriler yüklenirken gösterilecek animasyon
+                child: Text(
+                  'Sonuç bulunamadı.',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+              )
             : ListView.builder(
-                itemCount: products.length,
+                itemCount: filteredProducts.length,
                 itemBuilder: (context, index) {
-                  final product = products[index];
+                  final product = filteredProducts[index];
                   return Card(
-                    margin:
-                        const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
+                    margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -79,8 +123,7 @@ class _MarketPricesState extends State<MarketPrices> {
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
-                          color:
-                              Color.fromARGB(255, 54, 116, 215), // Başlık rengi
+                          color: Color.fromARGB(255, 54, 116, 215),
                         ),
                       ),
                       subtitle: Text(
@@ -98,8 +141,7 @@ class _MarketPricesState extends State<MarketPrices> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                ProductDetailPage(product: product),
+                            builder: (context) => ProductDetailPage(product: product),
                           ),
                         );
                       },
